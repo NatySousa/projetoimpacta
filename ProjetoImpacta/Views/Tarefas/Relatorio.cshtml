@@ -1,0 +1,35 @@
+﻿@model ProjetoImpacta.Models.Relatorio
+
+@{
+    ViewData["Title"] = "Relatório";
+}
+
+<h3>Relatórios de Tarefas</h3>
+<p>
+    Utilize o formulário para gerar o relatório desejado.
+</p>
+<hr />
+@using (Html.BeginForm())
+{
+    <label>Informe a data de início do período:</label>
+    @Html.TextBoxFor(model => model.DataMin,
+        new { @class = "form-control", @type = "date" })
+    <div class="text-danger">
+        @Html.ValidationMessageFor(model => model.DataMin)
+    </div>
+    <br />
+
+    <label>Informe a data de fim do período:</label>
+    @Html.TextBoxFor(model => model.DataMax,
+        new { @class = "form-control", @type = "date" })
+    <div class="text-danger">
+        @Html.ValidationMessageFor(model => model.DataMax)
+    </div>
+    <br />
+
+    <input type="submit" value="Gerar Relatório"
+           class="btn btn-success" />
+}
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ProjetoImpacta.Models.Tarefa>
+
+@{
+    ViewData["Title"] = "Lista de Tarefas";
+}
+
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Cadastar Tarefa</a>
+</p>
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Realizado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataCadastro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Realizado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataCadastro)
+            </td>
+            <td class="text-right">
+                <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.IdTarefa">Editar</a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdTarefa">Deletar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

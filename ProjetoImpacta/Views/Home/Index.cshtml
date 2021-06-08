@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h3>Sistema para controle de tarefas</h3>
+<p>
+    Projeto desenvolvido em .NET CORE MVC com SqlServer.
+
+    <hr />
+
+    <div id="grafico"></div>
+
+</p>
+
+@section scripts {
+    <!-- arquivos de extensão JS (JavaScript) -->
+    <script src="~/js/bootstrap.js"></script>
+
+    <!-- caminho da biblioteca do jquery -->
+    <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+    <script>
+        //função para acessar o método ObterDadosGrafico (JsonResult) da classe TarefasController
+        $(document).ready(
+            function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Tarefas/ObterDadosGrafico',
+                    success: function (result) {
+
+                        var array = [];
+
+                        for (var i = 0; i < result.length; i++) {
+                            array.push([
+                                result[i].dataRealizado, result[i].total
+                            ]);
+                        }
+
+                        new Highcharts.Chart({
+                            chart: {
+                                type: 'pie',
+                                renderTo: 'grafico'
+
+                            },
+                            title: {
+                                text: 'Tarefas'
+                            },
+                            subtitle: {
+                                text: 'Total de tarefas realizadas'
+                            },
+                            plotOptions: {
+                                pie: {
+                                    innerSize: '55%'
+                                }
+                            },
+                            series: [
+                                { data: array } //dados do gráfico..
+                            ]
+                        })
+                    }
+                })
+            }
+        )
+    </script>
+}
